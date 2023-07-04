@@ -1,8 +1,14 @@
 <script lang="ts">
-import { PropType, defineComponent } from "vue";
+import { PropType, defineComponent, ref } from "vue";
+
+import Modal from "../Modal.vue";
+
 import * as Types from "../../types";
 
 export default defineComponent({
+  components: {
+    Modal,
+  },
   props: {
     jokesData: {
       type: Array as PropType<Types.Joke[]>,
@@ -10,12 +16,24 @@ export default defineComponent({
     },
   },
   setup() {
+    const isModalOpen = ref<boolean>(false);
     const isTwoPart = (type: string) => type === Types.JOKE_TYPE.TwoPart;
     const isSingle = (type: string) => type === Types.JOKE_TYPE.Single;
 
+    function onShowMore(): void {
+      isModalOpen.value = true;
+    }
+
+    function onCloseModal(): void {
+      isModalOpen.value = false;
+    }
+
     return {
+      isModalOpen,
+      onCloseModal,
       isTwoPart,
       isSingle,
+      onShowMore,
     };
   },
 });
@@ -31,6 +49,14 @@ export default defineComponent({
     <div v-else-if="isSingle(joke.type)">
       <div>{{ joke.joke }}</div>
     </div>
+
+    <button @click="onShowMore">Show more</button>
+    <Modal
+      v-if="isModalOpen"
+      :joke="joke"
+      :isTwoPart="isTwoPart(joke.type)"
+      :isSingle="isSingle(joke.type)"
+      @close-modal="onCloseModal" />
   </li>
 </template>
 
