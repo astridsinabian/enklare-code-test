@@ -76,6 +76,6 @@ export default defineComponent({
   row-gap: 0.5rem;
   column-gap: 0.5rem;
   padding: 0;
-  margin: 1rem;
+  margin: 1.5rem 1rem 1rem 1rem;
 }
 </style>

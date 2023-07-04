@@ -1,5 +1,5 @@
 <script lang="ts">
-import { PropType, defineComponent, onMounted, ref } from "vue";
+import { PropType, defineComponent, ref } from "vue";
 
 import Modal from "../Modal.vue";
 import JokeTwoPart from "./JokeTwoPart.vue";
@@ -19,7 +19,7 @@ export default defineComponent({
       required: false,
     },
   },
-  setup(props) {
+  setup() {
     const isModalOpen = ref<boolean>(false);
     const jokes = ref<Types.Joke[] | null>(null);
     const selectedJoke = ref<Types.Joke | undefined>(undefined);
@@ -36,10 +36,6 @@ export default defineComponent({
       isModalOpen.value = false;
     }
 
-    onMounted(() => {
-      console.log(props.jokesData);
-    });
-
     return {
       isModalOpen,
       jokes,
@@ -54,13 +50,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <li
-    v-for="joke in jokesData"
-    :key="joke.id"
-    :class="`joke-list-item ${joke.category.toLowerCase()}`">
-    <JokeTwoPart v-if="isTwoPart(joke.type)" :joke="joke" />
+  <li v-for="joke in jokesData" :key="joke.id" class="joke-list-item">
+    <div class="joke-list-item-right">
+      <span
+        :class="`joke-list-item-right-circle ${joke.category.toLowerCase()}`"></span>
 
-    <JokeSingle v-else-if="isSingle(joke.type)" :joke="joke" />
+      <JokeTwoPart v-if="isTwoPart(joke.type)" :joke="joke" />
+
+      <JokeSingle v-else-if="isSingle(joke.type)" :joke="joke" />
+    </div>
 
     <button @click="onShowMore(joke)">Show more</button>
     <Modal
@@ -77,15 +75,28 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   list-style: none;
-  padding: 0.5rem;
-  background-color: #f2f2f2;
+  padding: 1.5rem;
+  border: 1px solid var(--color-light-gray);
 }
 
-.joke-list-item.programming {
-  background-color: blue;
+.joke-list-item-right {
+  display: flex;
 }
 
-.joke-list-item.pun {
-  background-color: red;
+.joke-list-item-right-circle {
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+  margin-right: 0.5rem;
+  background-color: var(--color-light-gray);
+}
+
+.joke-list-item-right-circle.programming {
+  background-color: var(--color-blue);
+}
+
+.joke-list-item-right-circle.pun {
+  background-color: var(--color-red);
 }
 </style>
