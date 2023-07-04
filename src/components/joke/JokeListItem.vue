@@ -2,6 +2,7 @@
 import { PropType, defineComponent, ref } from "vue";
 
 import Modal from "../Modal.vue";
+import Circle from "../Circle.vue";
 import JokeTwoPart from "./JokeTwoPart.vue";
 import JokeSingle from "./JokeSingle.vue";
 
@@ -10,6 +11,7 @@ import * as Types from "../../types";
 export default defineComponent({
   components: {
     Modal,
+    Circle,
     JokeTwoPart,
     JokeSingle,
   },
@@ -23,9 +25,6 @@ export default defineComponent({
     const isModalOpen = ref<boolean>(false);
     const jokes = ref<Types.Joke[] | null>(null);
     const selectedJoke = ref<Types.Joke | undefined>(undefined);
-
-    const isTwoPart = (type: string) => type === Types.JOKE_TYPE.TwoPart;
-    const isSingle = (type: string) => type === Types.JOKE_TYPE.Single;
 
     function onShowMore(joke: Types.Joke): void {
       isModalOpen.value = true;
@@ -41,8 +40,6 @@ export default defineComponent({
       jokes,
       selectedJoke,
       onCloseModal,
-      isTwoPart,
-      isSingle,
       onShowMore,
     };
   },
@@ -52,21 +49,20 @@ export default defineComponent({
 <template>
   <li v-for="joke in jokesData" :key="joke.id" class="joke-list-item">
     <div class="joke-list-item-right">
-      <span
-        :class="`joke-list-item-right-circle ${joke.category.toLowerCase()}`"></span>
+      <Circle :category="joke.category.toLowerCase()" />
 
-      <JokeTwoPart v-if="isTwoPart(joke.type)" :joke="joke" />
+      <JokeTwoPart :joke="joke" />
 
-      <JokeSingle v-else-if="isSingle(joke.type)" :joke="joke" />
+      <JokeSingle :joke="joke" />
     </div>
 
-    <button @click="onShowMore(joke)">Show more</button>
-    <Modal
-      v-if="isModalOpen"
-      :joke="selectedJoke"
-      :isTwoPart="isTwoPart(joke.type)"
-      :isSingle="isSingle(joke.type)"
-      @close-modal="onCloseModal" />
+    <button class="joke-list-item-left-show-more" @click="onShowMore(joke)">
+      Show more
+    </button>
+    <Modal v-if="isModalOpen" @close-modal="onCloseModal">
+      <JokeTwoPart :joke="selectedJoke" :isFullLength="true" />
+      <JokeSingle :joke="selectedJoke" :isFullLength="true" />
+    </Modal>
   </li>
 </template>
 
@@ -81,22 +77,19 @@ export default defineComponent({
 
 .joke-list-item-right {
   display: flex;
+  align-items: center;
 }
 
-.joke-list-item-right-circle {
-  display: flex;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 100%;
-  margin-right: 0.5rem;
+.joke-list-item-left-show-more {
+  border: 1px solid var(--color-light-gray);
   background-color: var(--color-light-gray);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: opacity 300ms;
 }
 
-.joke-list-item-right-circle.programming {
-  background-color: var(--color-blue);
-}
-
-.joke-list-item-right-circle.pun {
-  background-color: var(--color-red);
+.joke-list-item-left-show-more:hover,
+.joke-list-item-left-show-more:focus {
+  opacity: 0.7;
 }
 </style>

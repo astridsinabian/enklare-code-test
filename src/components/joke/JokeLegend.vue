@@ -1,10 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import Circle from "../Circle.vue";
+
 export default defineComponent({
-  components: {},
-  setup() {
-    return {};
+  components: {
+    Circle,
   },
 });
 </script>
@@ -12,17 +13,17 @@ export default defineComponent({
 <template>
   <div class="joke-legend">
     <div class="joke-legend-group">
-      <span class="joke-legend-group-circle programming"></span>
+      <Circle category="programming" />
       <span class="joke-legend-group-text">Programming</span>
     </div>
 
     <div class="joke-legend-group">
-      <span class="joke-legend-group-circle pun"></span>
+      <Circle category="pun" />
       <span class="joke-legend-group-text">Pun</span>
     </div>
 
     <div class="joke-legend-group">
-      <span class="joke-legend-group-circle"></span>
+      <Circle />
       <span class="joke-legend-group-text">Other</span>
     </div>
   </div>
@@ -37,22 +38,5 @@ export default defineComponent({
 .joke-legend-group {
   display: flex;
   margin-right: 1rem;
-}
-
-.joke-legend-group-circle {
-  display: flex;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 100%;
-  margin-right: 0.5rem;
-  background-color: var(--color-light-gray);
-}
-
-.joke-legend-group-circle.programming {
-  background-color: var(--color-blue);
-}
-
-.joke-legend-group-circle.pun {
-  background-color: var(--color-red);
 }
 </style>
