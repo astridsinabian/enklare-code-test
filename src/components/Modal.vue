@@ -4,6 +4,7 @@ import { PropType, defineComponent } from "vue";
 import JokeTwoPart from "./joke/JokeTwoPart.vue";
 import JokeSingle from "./joke/JokeSingle.vue";
 import Circle from "./Circle.vue";
+import CustomButton from "./CustomButton.vue";
 
 import * as Types from "../types";
 
@@ -12,6 +13,7 @@ export default defineComponent({
     JokeTwoPart,
     JokeSingle,
     Circle,
+    CustomButton,
   },
   props: {
     joke: {
@@ -45,7 +47,7 @@ export default defineComponent({
       <div class="modal" @click.stop>
         <div class="modal-top">
           <Circle :category="joke?.category.toLowerCase()" />
-          <button class="modal-top-close" @click="onCloseModal">X</button>
+          <CustomButton @click="onCloseModal">X</CustomButton>
         </div>
 
         <div class="modal-content">
@@ -68,12 +70,12 @@ export default defineComponent({
   left: 0;
   right: 0;
 
-  background-color: #0e0e0e1d;
+  background-color: var(--color-modal-overlay);
 }
 
 .modal {
   padding: 1.5rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   height: 15rem;
   width: 30rem;
 }
@@ -82,19 +84,6 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.modal-top-close {
-  border: 1px solid var(--color-light-gray);
-  background-color: var(--color-light-gray);
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: opacity 300ms;
-}
-
-.modal-top-close:hover,
-.modal-top-close:focus {
-  opacity: 0.7;
 }
 
 .modal-content {

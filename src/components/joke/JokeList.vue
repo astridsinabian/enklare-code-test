@@ -3,12 +3,14 @@ import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 
 import JokeListItem from "./JokeListItem.vue";
+import CustomButton from "../CustomButton.vue";
 
 import * as Types from "../../types";
 
 export default defineComponent({
   components: {
     JokeListItem,
+    CustomButton,
   },
   setup() {
     const apiJokeData = ref<Types.ApiJokeData | null>(null);
@@ -63,9 +65,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <button class="joke-list-fetch" @click="onGetNewJokes">
-    Fetch new jokes
-  </button>
+  <div class="joke-list-fetch">
+    <CustomButton @click="onGetNewJokes">Fetch new jokes</CustomButton>
+  </div>
 
   <div v-if="errorMessage.isError" class="joke-list-error">
     Oops... something went wrong!
@@ -88,22 +90,9 @@ export default defineComponent({
   margin: 1.5rem 1rem 1rem 1rem;
 }
 
-.joke-list-fetch {
-  border: 1px solid var(--color-light-gray);
-  background-color: var(--color-light-gray);
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: opacity 300ms;
-  margin: 1.5rem 1rem 0.5rem 1rem;
-}
-
-.joke-list-fetch:hover,
-.joke-list-fetch:focus {
-  opacity: 0.7;
-}
-
 .joke-list-error,
-.joke-list-loading {
+.joke-list-loading,
+.joke-list-fetch {
   margin: 1.5rem 1rem 1rem 1rem;
 }
 </style>

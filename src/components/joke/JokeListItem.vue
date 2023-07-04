@@ -3,6 +3,7 @@ import { PropType, defineComponent, ref } from "vue";
 
 import Modal from "../Modal.vue";
 import Circle from "../Circle.vue";
+import CustomButton from "../CustomButton.vue";
 import JokeTwoPart from "./JokeTwoPart.vue";
 import JokeSingle from "./JokeSingle.vue";
 
@@ -12,6 +13,7 @@ export default defineComponent({
   components: {
     Modal,
     Circle,
+    CustomButton,
     JokeTwoPart,
     JokeSingle,
   },
@@ -56,9 +58,8 @@ export default defineComponent({
       <JokeSingle :joke="joke" />
     </div>
 
-    <button class="joke-list-item-left-show-more" @click="onShowMore(joke)">
-      Show more
-    </button>
+    <CustomButton @click="onShowMore(joke)">Show more</CustomButton>
+
     <Modal v-if="isModalOpen" @close-modal="onCloseModal">
       <JokeTwoPart :joke="selectedJoke" :isFullLength="true" />
       <JokeSingle :joke="selectedJoke" :isFullLength="true" />
@@ -78,18 +79,5 @@ export default defineComponent({
 .joke-list-item-right {
   display: flex;
   align-items: center;
-}
-
-.joke-list-item-left-show-more {
-  border: 1px solid var(--color-light-gray);
-  background-color: var(--color-light-gray);
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: opacity 300ms;
-}
-
-.joke-list-item-left-show-more:hover,
-.joke-list-item-left-show-more:focus {
-  opacity: 0.7;
 }
 </style>
