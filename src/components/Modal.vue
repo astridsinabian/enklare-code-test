@@ -1,9 +1,16 @@
 <script lang="ts">
 import { PropType, defineComponent } from "vue";
 
+import JokeTwoPart from "./joke/JokeTwoPart.vue";
+import JokeSingle from "./joke/JokeSingle.vue";
+
 import * as Types from "../types";
 
 export default defineComponent({
+  components: {
+    JokeTwoPart,
+    JokeSingle,
+  },
   props: {
     joke: {
       type: Object as PropType<Types.Joke>,
@@ -37,12 +44,8 @@ export default defineComponent({
         <button class="modal-close" @click="onCloseModal">X</button>
 
         <div class="modal-content">
-          <div v-if="isTwoPart">
-            <div>{{ joke?.setup }}</div>
-            <div>{{ joke?.delivery }}</div>
-          </div>
-
-          <div v-else-if="isSingle">{{ joke?.joke }}</div>
+          <JokeTwoPart v-if="isTwoPart" :joke="joke" :isFullLength="true" />
+          <JokeSingle v-else-if="isSingle" :joke="joke" :isFullLength="true" />
         </div>
       </div>
     </div>
@@ -78,8 +81,6 @@ export default defineComponent({
 .modal-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .modal-fade-enter,

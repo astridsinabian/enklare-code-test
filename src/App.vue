@@ -10,10 +10,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    Hello World!
+  <main>
+    <h1 class="app-heading">Joke Code Test</h1>
     <JokeList />
-  </div>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-heading {
+  margin: 1rem;
+}
+</style>

@@ -24,6 +24,7 @@ export default defineComponent({
         const response = await axios.get<Types.ApiJokeData>(
           "https://v2.jokeapi.dev/joke/Programming,Pun,Misc,Spooky?safe-mode&amount=10"
         );
+
         if (response.status !== 200) {
           errorMessage.value = {
             message: response.statusText,
@@ -31,6 +32,7 @@ export default defineComponent({
           };
           isLoading.value = false;
         }
+
         apiJokeData.value = response.data;
         isLoading.value = false;
       } catch (error: unknown) {
@@ -62,9 +64,18 @@ export default defineComponent({
     Oops... something went wrong! (Error message: {{ errorMessage.message }})
   </div>
 
-  <ul v-else>
+  <ul v-else class="joke-list">
     <JokeListItem :jokesData="apiJokeData?.jokes" />
   </ul>
 </template>
 
-<style scoped></style>
+<style scoped>
+.joke-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  padding: 0;
+  margin: 1rem;
+}
+</style>
