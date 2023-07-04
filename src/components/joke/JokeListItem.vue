@@ -71,6 +71,7 @@ export default defineComponent({
 .joke-list-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   list-style: none;
   padding: 1.5rem;
   border: 1px solid var(--color-light-gray);

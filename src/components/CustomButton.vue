@@ -37,6 +37,7 @@ export default defineComponent({
   cursor: pointer;
   transition: opacity 300ms;
   font-size: 1rem;
+  height: 2rem;
 }
 
 .custom-button:hover,

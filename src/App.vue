@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import JokeList from "./components/joke/JokeList.vue";
 import JokeLegend from "./components/joke/JokeLegend.vue";
 
